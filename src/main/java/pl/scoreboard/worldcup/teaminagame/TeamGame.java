@@ -1,6 +1,6 @@
 package pl.scoreboard.worldcup.teaminagame;
 
-import pl.scoreboard.worldcup.person.Person;
+import pl.scoreboard.worldcup.person.IPerson;
 import pl.scoreboard.worldcup.team.ITeam;
 
 import java.util.*;
@@ -9,14 +9,14 @@ public class TeamGame implements ITeamGame {
 
     private final ITeam team;
     private final Host host;
-    private Person[] lineUp;
-    private Person[] bench;
+    private IPerson[] lineUp;
+    private IPerson[] bench;
     private int substituteCounter;
     private int teamScore;
-    private Map<Person, List<Card>> cards;
-    private final Person coach;
+    private Map<IPerson, List<Card>> cards;
+    private final IPerson coach;
 
-    public TeamGame(ITeam team, Host host, Person[] lineUp, Person[] bench, Person coach) {
+    public TeamGame(ITeam team, Host host, IPerson[] lineUp, IPerson[] bench, IPerson coach) {
         this.team = team;
         this.host = host;
         this.lineUp = lineUp;
@@ -29,7 +29,7 @@ public class TeamGame implements ITeamGame {
         return team;
     }
 
-    public void setBench(Person[] bench) {
+    public void setBench(IPerson[] bench) {
         this.bench = bench;
     }
 
@@ -37,7 +37,7 @@ public class TeamGame implements ITeamGame {
         return host;
     }
 
-    public Person[] getLineUp() {
+    public IPerson[] getLineUp() {
         return lineUp;
     }
 
@@ -49,19 +49,19 @@ public class TeamGame implements ITeamGame {
         return teamScore;
     }
 
-    public Person[] getBench() {
+    public IPerson[] getBench() {
         return bench;
     }
 
-    public Map<Person, List<Card>> getCards() {
+    public Map<IPerson, List<Card>> getCards() {
         return cards;
     }
 
-    public Person getCoach() {
+    public IPerson getCoach() {
         return coach;
     }
 
-    public void setLineUp(Person[] lineUp) {
+    public void setLineUp(IPerson[] lineUp) {
         this.lineUp = lineUp;
     }
 
@@ -70,22 +70,22 @@ public class TeamGame implements ITeamGame {
     }
 
     @Override
-    public void substitute(Person person1, Person person2) {
+    public void substitute(IPerson person1, IPerson person2) {
         if (substituteCounter < 5) {
-            List<Person> tempBench = new LinkedList<>(List.of(bench));
+            List<IPerson> tempBench = new LinkedList<>(List.of(bench));
             tempBench.remove(person2);
             tempBench.add(person1);
-            bench = tempBench.toArray(new Person[0]);
-            List<Person> tempLineUp = new LinkedList<>(List.of(lineUp));
+            bench = tempBench.toArray(new IPerson[0]);
+            List<IPerson> tempLineUp = new LinkedList<>(List.of(lineUp));
             tempLineUp.add(person2);
             tempLineUp.remove(person1);
-            lineUp = tempLineUp.toArray(new Person[0]);
+            lineUp = tempLineUp.toArray(new IPerson[0]);
             substituteCounter++;
         }
     }
 
     @Override
-    public void giveRedCardToAPlayer(Person person) {
+    public void giveRedCardToAPlayer(IPerson person) {
         if (Objects.isNull(cards)) cards = new HashMap<>();
         if (this.cards.containsKey(person)) {
             cards.get(person).add(Card.RED_CARD);
@@ -94,13 +94,13 @@ public class TeamGame implements ITeamGame {
             temp.add(Card.RED_CARD);
             cards.put(person, temp);
         }
-        List<Person> tempLineUp = new LinkedList<>(List.of(lineUp));
+        List<IPerson> tempLineUp = new LinkedList<>(List.of(lineUp));
         tempLineUp.remove(person);
-        lineUp = tempLineUp.toArray(new Person[0]);
+        lineUp = tempLineUp.toArray(new IPerson[0]);
     }
 
     @Override
-    public void giveYellowCardToAPlayer(Person person) {
+    public void giveYellowCardToAPlayer(IPerson person) {
         if (Objects.isNull(cards)) cards = new HashMap<>();
         if (this.cards.containsKey(person)) {
             if (!this.cards.get(person).contains(Card.RED_CARD)) {
