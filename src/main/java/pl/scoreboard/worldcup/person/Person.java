@@ -4,8 +4,8 @@ import java.util.Objects;
 
 public class Person implements IPerson {
 
-    private final String firstName;
-    private final String lastName;
+    private String firstName;
+    private String lastName;
     private int age;
     private String postalCode;
     private String address;
@@ -14,6 +14,14 @@ public class Person implements IPerson {
 
     public Person(String firstName, String lastName) {
         this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
