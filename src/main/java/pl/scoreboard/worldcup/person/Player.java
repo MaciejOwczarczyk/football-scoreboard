@@ -9,6 +9,7 @@ public class Player extends Person {
     private Date contractStartDate;
     private Date contractEndDate;
     private PlayerRole playerRole;
+    private int number;
 
     public Player(String firstName, String lastName) {
         super(firstName, lastName);
@@ -42,8 +43,17 @@ public class Player extends Person {
         return contractEndDate;
     }
 
+
     public void setContractEndDate(Date contractEndDate) {
         this.contractEndDate = contractEndDate;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
     }
 
     @Override
@@ -62,7 +72,7 @@ public class Player extends Person {
         if (Objects.nonNull(playerRole)) {
             result = prime * result + playerRole.hashCode();
         }
-        result = 31 * result + getAge();
+        result = prime * result + number;
         return result;
     }
 
@@ -82,7 +92,8 @@ public class Player extends Person {
         boolean contractStartCodeEquals = (this.contractStartDate == null && other.getContractStartDate() == null) || (this.contractStartDate != null && this.contractStartDate.equals(other.contractStartDate));
         boolean contractEndCodeEquals = (this.contractEndDate == null && other.getContractEndDate()== null) || (this.contractEndDate != null && this.contractEndDate.equals(other.getContractEndDate()));
         boolean roleCodeEquals = (this.playerRole == null && other.getPlayerRole() == null) || (this.playerRole != null && this.playerRole.equals(other.playerRole));
-        return salaryCodeEquals && contractStartCodeEquals && contractEndCodeEquals && roleCodeEquals;
+        boolean numberCodeEquals = this.number == other.getNumber();
+        return salaryCodeEquals && contractStartCodeEquals && contractEndCodeEquals && roleCodeEquals && numberCodeEquals;
     }
 
 }
