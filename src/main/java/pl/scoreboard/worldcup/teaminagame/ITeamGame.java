@@ -1,12 +1,12 @@
 package pl.scoreboard.worldcup.teaminagame;
 
-import pl.scoreboard.worldcup.person.Person;
+import pl.scoreboard.worldcup.person.IPerson;
 
 public interface ITeamGame {
 
-    void substitute(Person person1, Person person2);
-    void giveRedCardToAPlayer(Person person);
-    void giveYellowCardToAPlayer(Person person);
+    void substitute(IPerson person1, IPerson person2);
+    void giveRedCardToAPlayer(IPerson person);
+    void giveYellowCardToAPlayer(IPerson person);
     void addScore();
     void removeScore();
 

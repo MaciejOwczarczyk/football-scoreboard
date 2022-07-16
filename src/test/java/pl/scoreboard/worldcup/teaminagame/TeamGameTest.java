@@ -2,14 +2,13 @@ package pl.scoreboard.worldcup.teaminagame;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
+import pl.scoreboard.worldcup.person.IPerson;
 import pl.scoreboard.worldcup.person.Person;
 import pl.scoreboard.worldcup.person.Player;
 import pl.scoreboard.worldcup.person.Staff;
 import pl.scoreboard.worldcup.team.ITeam;
 import pl.scoreboard.worldcup.team.Team;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -25,8 +24,8 @@ class TeamGameTest {
     void shouldCheckEqualsAndHashCodeContract() {
         ITeam team = new Team("Team1");
         Host host = Host.HOME_TEAM;
-        Person[] lineup = new Person[]{new Player("player1", "player1")};
-        Person person = new Staff("staff", "staff");
+        IPerson[] lineup = new Person[]{new Player("player1", "player1")};
+        IPerson person = new Staff("staff", "staff");
         ITeamGame teamGame = new TeamGame(team, host, lineup, lineup, person);
         ITeamGame teamGame1 = new TeamGame(team, host, lineup, lineup, person);
         int hasCode = teamGame.hashCode();
@@ -38,21 +37,21 @@ class TeamGameTest {
     @Test
     void shouldSubstitutePlayer() {
         TeamGame teamGame = mock(TeamGame.class, CALLS_REAL_METHODS);
-        Person player1 = new Player("Player1", "Player1");
-        Person player2 = new Player("Player2", "Player2");
-        Person player3 = new Player("Player3", "Player3");
+        IPerson player1 = new Player("Player1", "Player1");
+        IPerson player2 = new Player("Player2", "Player2");
+        IPerson player3 = new Player("Player3", "Player3");
 
-        Person[] lineup = new Person[]{player1, player2};
-        Person[] bench = new Person[]{player3};
+        IPerson[] lineup = new IPerson[]{player1, player2};
+        IPerson[] bench = new IPerson[]{player3};
         teamGame.setSubstituteCounter(0);
         teamGame.setLineUp(lineup);
         teamGame.setBench(bench);
 
         teamGame.substitute(player1, player3);
-        Person[] expectedLineUp = new Person[]{player2, player3};
-        Person[] expectedBench  = new Person[]{player1};
-        Person[] actualLineUp = teamGame.getLineUp();
-        Person[] actualBench = teamGame.getBench();
+        IPerson[] expectedLineUp = new IPerson[]{player2, player3};
+        IPerson[] expectedBench  = new IPerson[]{player1};
+        IPerson[] actualLineUp = teamGame.getLineUp();
+        IPerson[] actualBench = teamGame.getBench();
         assertArrayEquals(expectedLineUp, actualLineUp);
         assertArrayEquals(expectedBench, actualBench);
     }
@@ -61,21 +60,21 @@ class TeamGameTest {
     @Test
     void shouldNotSubstitutePlayer() {
         TeamGame teamGame = mock(TeamGame.class, CALLS_REAL_METHODS);
-        Person player1 = new Player("Player1", "Player1");
-        Person player2 = new Player("Player2", "Player2");
-        Person player3 = new Player("Player3", "Player3");
+        IPerson player1 = new Player("Player1", "Player1");
+        IPerson player2 = new Player("Player2", "Player2");
+        IPerson player3 = new Player("Player3", "Player3");
 
-        Person[] lineup = new Person[]{player1, player2};
-        Person[] bench = new Person[]{player3};
+        IPerson[] lineup = new IPerson[]{player1, player2};
+        IPerson[] bench = new IPerson[]{player3};
         teamGame.setSubstituteCounter(6);
         teamGame.setLineUp(lineup);
         teamGame.setBench(bench);
 
         teamGame.substitute(player1, player3);
-        Person[] expectedLineUp = new Person[]{player1, player2};
-        Person[] expectedBench  = new Person[]{player3};
-        Person[] actualLineUp = teamGame.getLineUp();
-        Person[] actualBench = teamGame.getBench();
+        IPerson[] expectedLineUp = new IPerson[]{player1, player2};
+        IPerson[] expectedBench  = new IPerson[]{player3};
+        IPerson[] actualLineUp = teamGame.getLineUp();
+        IPerson[] actualBench = teamGame.getBench();
         assertArrayEquals(expectedLineUp, actualLineUp);
         assertArrayEquals(expectedBench, actualBench);
     }
@@ -85,15 +84,15 @@ class TeamGameTest {
     void shouldGiveRedCardToAPlayer() {
         TeamGame teamGame = mock(TeamGame.class, CALLS_REAL_METHODS);
 
-        Person player1 = new Player("Player1", "Player1");
-        Person player2 = new Player("Player2", "Player2");
-        Person player3 = new Player("Player3", "Player3");
-        Person[] lineup = new Person[]{player1, player2, player3};
+        IPerson player1 = new Player("Player1", "Player1");
+        IPerson player2 = new Player("Player2", "Player2");
+        IPerson player3 = new Player("Player3", "Player3");
+        IPerson[] lineup = new IPerson[]{player1, player2, player3};
         teamGame.setLineUp(lineup);
 
         teamGame.giveRedCardToAPlayer(player1);
-        Person[] expectedLineUp = new Person[]{player2, player3};
-        Person[] actualLineUp = teamGame.getLineUp();
+        IPerson[] expectedLineUp = new IPerson[]{player2, player3};
+        IPerson[] actualLineUp = teamGame.getLineUp();
         Card expected = Card.RED_CARD;
         Card actual = teamGame.getCards().get(player1).get(0);
         assertArrayEquals(expectedLineUp, actualLineUp);
@@ -105,16 +104,16 @@ class TeamGameTest {
     void shouldGiveFirstYellowCardToAPlayer() {
         TeamGame teamGame = mock(TeamGame.class, CALLS_REAL_METHODS);
 
-        Person player1 = new Player("Player1", "Player1");
-        Person player2 = new Player("Player2", "Player2");
-        Person player3 = new Player("Player3", "Player3");
-        Person[] lineup = new Person[]{player1, player2, player3};
+        IPerson player1 = new Player("Player1", "Player1");
+        IPerson player2 = new Player("Player2", "Player2");
+        IPerson player3 = new Player("Player3", "Player3");
+        IPerson[] lineup = new IPerson[]{player1, player2, player3};
         teamGame.setLineUp(lineup);
 
         teamGame.giveYellowCardToAPlayer(player1);
-        Person[] expectedLineUp = new Person[]{player1, player2, player3};
-        Person[] actualLineUp = teamGame.getLineUp();
-        Map<Person, List<Card>> cards = teamGame.getCards();
+        IPerson[] expectedLineUp = new IPerson[]{player1, player2, player3};
+        IPerson[] actualLineUp = teamGame.getLineUp();
+        Map<IPerson, List<Card>> cards = teamGame.getCards();
         Card expected = Card.YELLOW_CARD;
         Card actual = cards.get(player1).get(0);
         assertArrayEquals(expectedLineUp, actualLineUp);
@@ -126,17 +125,17 @@ class TeamGameTest {
     void shouldGiveSecondYellowCardToAPlayer() {
         TeamGame teamGame = mock(TeamGame.class, CALLS_REAL_METHODS);
 
-        Person player1 = new Player("Player1", "Player1");
-        Person player2 = new Player("Player2", "Player2");
-        Person player3 = new Player("Player3", "Player3");
-        Person[] lineup = new Person[]{player1, player2, player3};
+        IPerson player1 = new Player("Player1", "Player1");
+        IPerson player2 = new Player("Player2", "Player2");
+        IPerson player3 = new Player("Player3", "Player3");
+        IPerson[] lineup = new IPerson[]{player1, player2, player3};
         teamGame.setLineUp(lineup);
 
         teamGame.giveYellowCardToAPlayer(player1);
         teamGame.giveYellowCardToAPlayer(player1);
-        Person[] expectedLineUp = new Person[]{player2, player3};
-        Person[] actualLineUp = teamGame.getLineUp();
-        Map<Person, List<Card>> cards = teamGame.getCards();
+        IPerson[] expectedLineUp = new IPerson[]{player2, player3};
+        IPerson[] actualLineUp = teamGame.getLineUp();
+        Map<IPerson, List<Card>> cards = teamGame.getCards();
         Card expected = Card.YELLOW_CARD;
         Card actual = cards.get(player1).get(0);
         int expectedYellowCards = 2;

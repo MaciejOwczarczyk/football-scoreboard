@@ -1,6 +1,6 @@
 package pl.scoreboard.worldcup.team;
 
-import pl.scoreboard.worldcup.person.Person;
+import pl.scoreboard.worldcup.person.IPerson;
 
 import java.util.Objects;
 import java.util.Set;
@@ -10,8 +10,8 @@ public class Team implements ITeam {
     private final String teamName;
     private String city;
     private String country;
-    private Set<Person> players;
-    private Set<Person> staff;
+    private Set<IPerson> players;
+    private Set<IPerson> staff;
     private boolean currentlyInGame;
 
     public Team(String teamName) {
@@ -22,7 +22,7 @@ public class Team implements ITeam {
         return teamName;
     }
 
-    public Set<Person> getPlayers() {
+    public Set<IPerson> getPlayers() {
         return players;
     }
 
@@ -34,11 +34,11 @@ public class Team implements ITeam {
         this.country = country;
     }
 
-    public Set<Person> getStaff() {
+    public Set<IPerson> getStaff() {
         return staff;
     }
 
-    public void setStaff(Set<Person> staff) {
+    public void setStaff(Set<IPerson> staff) {
         this.staff = staff;
     }
 
@@ -58,7 +58,7 @@ public class Team implements ITeam {
         this.currentlyInGame = currentlyInGame;
     }
 
-    public void setPlayers(Set<Person> players) {
+    public void setPlayers(Set<IPerson> players) {
         this.players = players;
     }
 
@@ -105,28 +105,28 @@ public class Team implements ITeam {
     }
 
     @Override
-    public void addPlayerToATeam(Person player) {
+    public void addPlayerToATeam(IPerson player) {
         if (Objects.nonNull(this.getPlayers())) {
             this.getPlayers().add(player);
         }
     }
 
     @Override
-    public void removePlayerFromATeam(Person player) {
+    public void removePlayerFromATeam(IPerson player) {
         if (Objects.nonNull(this.getPlayers())) {
             this.getPlayers().remove(player);
         }
     }
 
     @Override
-    public void addStaffToATeam(Person staff) {
+    public void addStaffToATeam(IPerson staff) {
         if (Objects.nonNull(this.getStaff())) {
             this.getStaff().add(staff);
         }
     }
 
     @Override
-    public void removeStaffFromATeam(Person staff) {
+    public void removeStaffFromATeam(IPerson staff) {
         if (Objects.nonNull(this.getStaff())) {
             this.getStaff().remove(staff);
         }
