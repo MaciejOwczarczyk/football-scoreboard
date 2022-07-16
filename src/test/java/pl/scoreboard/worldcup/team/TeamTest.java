@@ -5,6 +5,9 @@ import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
+import pl.scoreboard.worldcup.person.Person;
+import pl.scoreboard.worldcup.person.Player;
+import pl.scoreboard.worldcup.person.Staff;
 
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -21,52 +24,18 @@ public class TeamTest {
         EqualsVerifier.forClass(Team.class).suppress(Warning.NONFINAL_FIELDS).verify();
     }
 
-    @DisplayName("Should change player in a game")
-    @Test
-    public void shouldChangePlayerInAGame() {
-        Team team = mock(Team.class, CALLS_REAL_METHODS);
-        team.setCurrentlyInGame(Boolean.TRUE);
-        String player1 = "Player1";
-        String player2 = "Player2";
-        String player3 = "Player3";
-        String player4 = "Player4";
-        Set<String> lineUp = Stream.of(player1, player2, player3).collect(Collectors.toSet());
-        Set<String> expected = Stream.of(player2, player3, player4).collect(Collectors.toSet());
-        team.setLineUp(lineUp);
-        team.changePlayerInAGame(player1, player4);
-        Set<String> actual = team.getLineUp();
-        assertEquals(expected, actual);
-    }
-
-    @DisplayName("Should not change player in a game")
-    @Test
-    public void shouldNotChangePlayerInAGame() {
-        Team team = mock(Team.class, CALLS_REAL_METHODS);
-        team.setCurrentlyInGame(Boolean.FALSE);
-        String player1 = "Player1";
-        String player2 = "Player2";
-        String player3 = "Player3";
-        String player4 = "Player4";
-        Set<String> lineUp = Stream.of(player1, player2, player3).collect(Collectors.toSet());
-        Set<String> expected = Stream.of(player1, player2, player3).collect(Collectors.toSet());
-        team.setLineUp(lineUp);
-        team.changePlayerInAGame(player1, player4);
-        Set<String> actual = team.getLineUp();
-        assertEquals(expected, actual);
-    }
-
     @DisplayName("Should add a new player to the team")
     @Test
     public void shouldAddPlayerToATeam() {
         Team team = mock(Team.class, CALLS_REAL_METHODS);
-        String player1 = "Player1";
-        String player2 = "Player2";
-        String player3 = "Player3";
-        Set<String> players = Stream.of(player1, player2).collect(Collectors.toSet());
-        Set<String> expected = Stream.of(player1, player2, player3).collect(Collectors.toSet());
-        team.setAllPlayers(players);
+        Person player1 = new Player("Player1", "Player1");
+        Person player2 = new Player("Player2", "Player2");
+        Person player3 = new Player("Player3", "Player3");
+        Set<Person> players = Stream.of(player1, player2).collect(Collectors.toSet());
+        Set<Person> expected = Stream.of(player1, player2, player3).collect(Collectors.toSet());
+        team.setPlayers(players);
         team.addPlayerToATeam(player3);
-        Set<String> actual = team.getAllPlayers();
+        Set<Person> actual = team.getPlayers();
         assertEquals(expected, actual);
     }
 
@@ -74,14 +43,46 @@ public class TeamTest {
     @Test
     public void shouldRemovePlayerFromATeam() {
         Team team = mock(Team.class, CALLS_REAL_METHODS);
-        String player1 = "Player1";
-        String player2 = "Player2";
-        String player3 = "Player3";
-        Set<String> players = Stream.of(player1, player2, player3).collect(Collectors.toSet());
-        Set<String> expected = Stream.of(player1, player2).collect(Collectors.toSet());
-        team.setAllPlayers(players);
+        Person player1 = new Player("Player1", "Player1");
+        Person player2 = new Player("Player2", "Player2");
+        Person player3 = new Player("Player3", "Player3");
+        Set<Person> players = Stream.of(player1, player2, player3).collect(Collectors.toSet());
+        Set<Person> expected = Stream.of(player1, player2).collect(Collectors.toSet());
+        team.setPlayers(players);
         team.removePlayerFromATeam(player3);
-        Set<String> actual = team.getAllPlayers();
+        Set<Person> actual = team.getPlayers();
         assertEquals(expected, actual);
     }
+
+    @DisplayName("Should add a new staff to the team")
+    @Test
+    public void shouldAddStaffToATeam() {
+        Team team = mock(Team.class, CALLS_REAL_METHODS);
+        Person staff = new Staff("Coach1", "Coach");
+        Person staff2 = new Staff("Physio2", "Physio2");
+        Person staff3 = new Staff("Physio3", "Physio3");
+        Set<Person> players = Stream.of(staff, staff2).collect(Collectors.toSet());
+        Set<Person> expected = Stream.of(staff, staff2, staff3).collect(Collectors.toSet());
+        team.setStaff(players);
+        team.addStaffToATeam(staff3);
+        Set<Person> actual = team.getStaff();
+        assertEquals(expected, actual);
+    }
+
+    @DisplayName("Should remove a staff from the team")
+    @Test
+    public void shouldRemoveStaffFromATeam() {
+        Team team = mock(Team.class, CALLS_REAL_METHODS);
+        Person staff = new Staff("Coach1", "Coach");
+        Person staff2 = new Staff("Physio2", "Physio2");
+        Person staff3 = new Staff("Physio3", "Physio3");
+        Set<Person> players = Stream.of(staff, staff2, staff3).collect(Collectors.toSet());
+        Set<Person> expected = Stream.of(staff, staff2).collect(Collectors.toSet());
+        team.setStaff(players);
+        team.removeStaffFromATeam(staff3);
+        Set<Person> actual = team.getStaff();
+        assertEquals(expected, actual);
+    }
+
+
 }
