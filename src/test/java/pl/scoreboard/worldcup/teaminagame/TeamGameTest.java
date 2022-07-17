@@ -1,12 +1,9 @@
 package pl.scoreboard.worldcup.teaminagame;
 
-import org.junit.Rule;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
 import org.mockito.junit.jupiter.MockitoExtension;
 import pl.scoreboard.worldcup.person.IPerson;
 import pl.scoreboard.worldcup.person.Person;
@@ -16,25 +13,24 @@ import pl.scoreboard.worldcup.team.ITeam;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.hamcrest.Matchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.mockito.Mockito.*;
+import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.CALLS_REAL_METHODS;
+import static org.mockito.Mockito.mock;
 
 @ExtendWith(MockitoExtension.class)
-public class TeamGameTest {
+class TeamGameTest {
 
     @Mock
     ITeam team;
     @Mock
     IPerson coach;
 
-    @Rule
-    public MockitoRule rule = MockitoJUnit.rule();
-
     @DisplayName("Should check contract between hashcode() and equals()")
     @Test
-    public void shouldCheckEqualsAndHashCodeContract() {
+    void shouldCheckEqualsAndHashCodeContract() {
         Host host = Host.HOME_TEAM;
         IPerson[] lineup = new Person[0];
         ITeamGame teamGame = new TeamGame(team, host, lineup, lineup, coach);
@@ -46,7 +42,7 @@ public class TeamGameTest {
 
     @DisplayName("Should substitute player")
     @Test
-    public void shouldSubstitutePlayer() {
+    void shouldSubstitutePlayer() {
         TeamGame teamGame = mock(TeamGame.class, CALLS_REAL_METHODS);
         IPerson player1 = new Player("Player1", "Player1");
         IPerson player2 = new Player("Player2", "Player2");
@@ -67,7 +63,7 @@ public class TeamGameTest {
 
     @DisplayName("Should not substitute player")
     @Test
-    public void shouldNotSubstitutePlayer() {
+    void shouldNotSubstitutePlayer() {
         TeamGame teamGame = mock(TeamGame.class, CALLS_REAL_METHODS);
         IPerson player1 = new Player("Player1", "Player1");
         IPerson player2 = new Player("Player2", "Player2");
@@ -88,7 +84,7 @@ public class TeamGameTest {
 
     @DisplayName("Should give red card to a player")
     @Test
-    public void shouldGiveRedCardToAPlayer() {
+    void shouldGiveRedCardToAPlayer() {
         TeamGame teamGame = mock(TeamGame.class, CALLS_REAL_METHODS);
         IPerson player1 = new Player("Player1", "Player1");
         IPerson player2 = new Player("Player2", "Player2");
@@ -106,7 +102,7 @@ public class TeamGameTest {
 
     @DisplayName("Should give first yellow card to a player")
     @Test
-    public void shouldGiveFirstYellowCardToAPlayer() {
+    void shouldGiveFirstYellowCardToAPlayer() {
         TeamGame teamGame = mock(TeamGame.class, CALLS_REAL_METHODS);
         IPerson player1 = new Player("Player1", "Player1");
         IPerson player2 = new Player("Player2", "Player2");
@@ -125,7 +121,7 @@ public class TeamGameTest {
 
     @DisplayName("Should give second yellow card to a player")
     @Test
-    public void shouldGiveSecondYellowCardToAPlayer() {
+    void shouldGiveSecondYellowCardToAPlayer() {
         TeamGame teamGame = mock(TeamGame.class, CALLS_REAL_METHODS);
 
         IPerson player1 = new Player("Player1", "Player1");

@@ -1,10 +1,9 @@
 package pl.scoreboard.worldcup.team;
 
-
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
-import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import pl.scoreboard.worldcup.person.IPerson;
@@ -15,22 +14,23 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.CALLS_REAL_METHODS;
 import static org.mockito.Mockito.mock;
 
+
 @ExtendWith(MockitoExtension.class)
-public class TeamTest {
+class TeamTest {
 
     @DisplayName("Should check contract between hashcode() and equals()")
     @Test
-    public void shouldCheckEqualsAndHashCodeContract() {
+    void shouldCheckEqualsAndHashCodeContract() {
         EqualsVerifier.forClass(Team.class).suppress(Warning.NONFINAL_FIELDS).verify();
     }
 
     @DisplayName("Should add a new player to the team")
     @Test
-    public void shouldAddPlayerToATeam() {
+    void shouldAddPlayerToATeam() {
         Team team = mock(Team.class, CALLS_REAL_METHODS);
         IPerson player1 = new Player("Player1", "Player1");
         IPerson player2 = new Player("Player2", "Player2");
@@ -45,7 +45,7 @@ public class TeamTest {
 
     @DisplayName("Should remove a player from the team")
     @Test
-    public void shouldRemovePlayerFromATeam() {
+    void shouldRemovePlayerFromATeam() {
         Team team = mock(Team.class, CALLS_REAL_METHODS);
         IPerson player1 = new Player("Player1", "Player1");
         IPerson player2 = new Player("Player2", "Player2");
@@ -60,7 +60,7 @@ public class TeamTest {
 
     @DisplayName("Should add a new staff to the team")
     @Test
-    public void shouldAddStaffToATeam() {
+    void shouldAddStaffToATeam() {
         Team team = mock(Team.class, CALLS_REAL_METHODS);
         IPerson staff = new Staff("Coach1", "Coach");
         IPerson staff2 = new Staff("Physio2", "Physio2");
@@ -75,7 +75,7 @@ public class TeamTest {
 
     @DisplayName("Should remove a staff from the team")
     @Test
-    public void shouldRemoveStaffFromATeam() {
+    void shouldRemoveStaffFromATeam() {
         Team team = mock(Team.class, CALLS_REAL_METHODS);
         IPerson staff = new Staff("Coach1", "Coach");
         IPerson staff2 = new Staff("Physio2", "Physio2");
