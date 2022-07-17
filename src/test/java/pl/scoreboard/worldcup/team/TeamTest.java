@@ -5,8 +5,9 @@ import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 import pl.scoreboard.worldcup.person.IPerson;
-import pl.scoreboard.worldcup.person.Person;
 import pl.scoreboard.worldcup.person.Player;
 import pl.scoreboard.worldcup.person.Staff;
 
@@ -15,8 +16,10 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.CALLS_REAL_METHODS;
+import static org.mockito.Mockito.mock;
 
+@ExtendWith(MockitoExtension.class)
 public class TeamTest {
 
     @DisplayName("Should check contract between hashcode() and equals()")

@@ -1,13 +1,17 @@
 package pl.scoreboard.worldcup.teaminagame;
 
+import org.junit.Rule;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnit;
+import org.mockito.junit.MockitoRule;
+import org.mockito.junit.jupiter.MockitoExtension;
 import pl.scoreboard.worldcup.person.IPerson;
 import pl.scoreboard.worldcup.person.Person;
 import pl.scoreboard.worldcup.person.Player;
-import pl.scoreboard.worldcup.person.Staff;
 import pl.scoreboard.worldcup.team.ITeam;
-import pl.scoreboard.worldcup.team.Team;
 
 import java.util.List;
 import java.util.Map;
@@ -17,17 +21,24 @@ import static org.hamcrest.Matchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.*;
 
-class TeamGameTest {
+@ExtendWith(MockitoExtension.class)
+public class TeamGameTest {
+
+    @Mock
+    ITeam team;
+    @Mock
+    IPerson coach;
+
+    @Rule
+    public MockitoRule rule = MockitoJUnit.rule();
 
     @DisplayName("Should check contract between hashcode() and equals()")
     @Test
-    void shouldCheckEqualsAndHashCodeContract() {
-        ITeam team = new Team("Team1");
+    public void shouldCheckEqualsAndHashCodeContract() {
         Host host = Host.HOME_TEAM;
-        IPerson[] lineup = new Person[]{new Player("player1", "player1")};
-        IPerson person = new Staff("staff", "staff");
-        ITeamGame teamGame = new TeamGame(team, host, lineup, lineup, person);
-        ITeamGame teamGame1 = new TeamGame(team, host, lineup, lineup, person);
+        IPerson[] lineup = new Person[0];
+        ITeamGame teamGame = new TeamGame(team, host, lineup, lineup, coach);
+        ITeamGame teamGame1 = new TeamGame(team, host, lineup, lineup, coach);
         int hasCode = teamGame.hashCode();
         int hasCode1 = teamGame1.hashCode();
         assertThat(Integer.compare(hasCode1, hasCode), is(0));
@@ -35,18 +46,16 @@ class TeamGameTest {
 
     @DisplayName("Should substitute player")
     @Test
-    void shouldSubstitutePlayer() {
+    public void shouldSubstitutePlayer() {
         TeamGame teamGame = mock(TeamGame.class, CALLS_REAL_METHODS);
         IPerson player1 = new Player("Player1", "Player1");
         IPerson player2 = new Player("Player2", "Player2");
         IPerson player3 = new Player("Player3", "Player3");
-
         IPerson[] lineup = new IPerson[]{player1, player2};
         IPerson[] bench = new IPerson[]{player3};
         teamGame.setSubstituteCounter(0);
         teamGame.setLineUp(lineup);
         teamGame.setBench(bench);
-
         teamGame.substitute(player1, player3);
         IPerson[] expectedLineUp = new IPerson[]{player2, player3};
         IPerson[] expectedBench  = new IPerson[]{player1};
@@ -58,18 +67,16 @@ class TeamGameTest {
 
     @DisplayName("Should not substitute player")
     @Test
-    void shouldNotSubstitutePlayer() {
+    public void shouldNotSubstitutePlayer() {
         TeamGame teamGame = mock(TeamGame.class, CALLS_REAL_METHODS);
         IPerson player1 = new Player("Player1", "Player1");
         IPerson player2 = new Player("Player2", "Player2");
         IPerson player3 = new Player("Player3", "Player3");
-
         IPerson[] lineup = new IPerson[]{player1, player2};
         IPerson[] bench = new IPerson[]{player3};
         teamGame.setSubstituteCounter(6);
         teamGame.setLineUp(lineup);
         teamGame.setBench(bench);
-
         teamGame.substitute(player1, player3);
         IPerson[] expectedLineUp = new IPerson[]{player1, player2};
         IPerson[] expectedBench  = new IPerson[]{player3};
@@ -81,15 +88,13 @@ class TeamGameTest {
 
     @DisplayName("Should give red card to a player")
     @Test
-    void shouldGiveRedCardToAPlayer() {
+    public void shouldGiveRedCardToAPlayer() {
         TeamGame teamGame = mock(TeamGame.class, CALLS_REAL_METHODS);
-
         IPerson player1 = new Player("Player1", "Player1");
         IPerson player2 = new Player("Player2", "Player2");
         IPerson player3 = new Player("Player3", "Player3");
         IPerson[] lineup = new IPerson[]{player1, player2, player3};
         teamGame.setLineUp(lineup);
-
         teamGame.giveRedCardToAPlayer(player1);
         IPerson[] expectedLineUp = new IPerson[]{player2, player3};
         IPerson[] actualLineUp = teamGame.getLineUp();
@@ -101,15 +106,13 @@ class TeamGameTest {
 
     @DisplayName("Should give first yellow card to a player")
     @Test
-    void shouldGiveFirstYellowCardToAPlayer() {
+    public void shouldGiveFirstYellowCardToAPlayer() {
         TeamGame teamGame = mock(TeamGame.class, CALLS_REAL_METHODS);
-
         IPerson player1 = new Player("Player1", "Player1");
         IPerson player2 = new Player("Player2", "Player2");
         IPerson player3 = new Player("Player3", "Player3");
         IPerson[] lineup = new IPerson[]{player1, player2, player3};
         teamGame.setLineUp(lineup);
-
         teamGame.giveYellowCardToAPlayer(player1);
         IPerson[] expectedLineUp = new IPerson[]{player1, player2, player3};
         IPerson[] actualLineUp = teamGame.getLineUp();
@@ -122,7 +125,7 @@ class TeamGameTest {
 
     @DisplayName("Should give second yellow card to a player")
     @Test
-    void shouldGiveSecondYellowCardToAPlayer() {
+    public void shouldGiveSecondYellowCardToAPlayer() {
         TeamGame teamGame = mock(TeamGame.class, CALLS_REAL_METHODS);
 
         IPerson player1 = new Player("Player1", "Player1");
@@ -136,36 +139,16 @@ class TeamGameTest {
         IPerson[] expectedLineUp = new IPerson[]{player2, player3};
         IPerson[] actualLineUp = teamGame.getLineUp();
         Map<IPerson, List<Card>> cards = teamGame.getCards();
-        Card expected = Card.YELLOW_CARD;
-        Card actual = cards.get(player1).get(0);
+        Card expectedCard = Card.YELLOW_CARD;
+        Card actualCard = cards.get(player1).get(0);
         int expectedYellowCards = 2;
         int actualYellowCards = (int) cards.get(player1).stream().filter(o -> o.equals(Card.YELLOW_CARD)).count();
         int expectedRedCards = 1;
         int actualRedCards = (int) cards.get(player1).stream().filter(o -> o.equals(Card.RED_CARD)).count();
         assertArrayEquals(expectedLineUp, actualLineUp);
-        assertEquals(expected, actual);
+        assertEquals(expectedCard, actualCard);
         assertEquals(expectedYellowCards, actualYellowCards);
         assertEquals(expectedRedCards, actualRedCards);
     }
 
-    @DisplayName("Should add score")
-    @Test
-    void shouldAddScore() {
-        TeamGame teamGame = mock(TeamGame.class, CALLS_REAL_METHODS);
-        teamGame.addScore();
-        int expected = 1;
-        int actual = teamGame.getTeamScore();
-        assertEquals(expected, actual);
-    }
-
-    @DisplayName("Should remove score")
-    @Test
-    void shouldRemoveScore() {
-        TeamGame teamGame = mock(TeamGame.class, CALLS_REAL_METHODS);
-        teamGame.addScore();
-        teamGame.removeScore();
-        int expected = 0;
-        int actual = teamGame.getTeamScore();
-        assertEquals(expected, actual);
-    }
 }

@@ -18,46 +18,57 @@ public class Team implements ITeam {
         this.teamName = teamName;
     }
 
+    @Override
     public String getTeamName() {
         return teamName;
     }
 
+    @Override
     public Set<IPerson> getPlayers() {
         return players;
     }
 
+    @Override
     public void setCity(String city) {
         this.city = city;
     }
 
+    @Override
     public void setCountry(String country) {
         this.country = country;
     }
 
+    @Override
     public Set<IPerson> getStaff() {
         return staff;
     }
 
+    @Override
     public void setStaff(Set<IPerson> staff) {
         this.staff = staff;
     }
 
+    @Override
     public String getCity() {
         return city;
     }
 
+    @Override
     public String getCountry() {
         return country;
     }
 
+    @Override
     public boolean isCurrentlyInGame() {
         return currentlyInGame;
     }
 
+    @Override
     public void setCurrentlyInGame(boolean currentlyInGame) {
         this.currentlyInGame = currentlyInGame;
     }
 
+    @Override
     public void setPlayers(Set<IPerson> players) {
         this.players = players;
     }
@@ -131,4 +142,5 @@ public class Team implements ITeam {
             this.getStaff().remove(staff);
         }
     }
+
 }
