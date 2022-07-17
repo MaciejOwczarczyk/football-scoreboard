@@ -25,50 +25,6 @@ public class TeamGame implements ITeamGame {
         this.teamScore = 0;
     }
 
-    public ITeam getTeam() {
-        return team;
-    }
-
-    public void setBench(IPerson[] bench) {
-        this.bench = bench;
-    }
-
-    public Host getHost() {
-        return host;
-    }
-
-    public IPerson[] getLineUp() {
-        return lineUp;
-    }
-
-    public int getSubstituteCounter() {
-        return substituteCounter;
-    }
-
-    public int getTeamScore() {
-        return teamScore;
-    }
-
-    public IPerson[] getBench() {
-        return bench;
-    }
-
-    public Map<IPerson, List<Card>> getCards() {
-        return cards;
-    }
-
-    public IPerson getCoach() {
-        return coach;
-    }
-
-    public void setLineUp(IPerson[] lineUp) {
-        this.lineUp = lineUp;
-    }
-
-    public void setSubstituteCounter(int substituteCounter) {
-        this.substituteCounter = substituteCounter;
-    }
-
     @Override
     public void substitute(IPerson person1, IPerson person2) {
         if (substituteCounter < 5) {
@@ -116,18 +72,6 @@ public class TeamGame implements ITeamGame {
         }
     }
 
-    @Override
-    public void addScore() {
-        teamScore++;
-    }
-
-    @Override
-    public void removeScore() {
-        if (teamScore > 0) {
-            teamScore--;
-        }
-    }
-
 
     @Override
     public final boolean equals(Object o) {
@@ -138,13 +82,11 @@ public class TeamGame implements ITeamGame {
         if (!(o instanceof TeamGame)) {
             return false;
         }
-
         TeamGame other = (TeamGame) o;
-
         boolean substituteCounterCodeEquals = this.substituteCounter == other.getSubstituteCounter();
         boolean scoreCodeEquals = this.teamScore == other.getTeamScore();
         boolean teamCodeEquals = (this.team == null && other.getTeam() == null) || (this.team != null && this.team.equals(other.getTeam()));
-        boolean lineUpCodeEquals = (Objects.isNull(this.lineUp) && Objects.isNull(other.getLineUp())) || (Arrays.equals(this.lineUp, other.getLineUp()));
+        boolean lineUpCodeEquals = (this.lineUp == null && other.getLineUp() == null) || (this.lineUp != null && Arrays.equals(this.lineUp, other.getLineUp()));
         boolean benchCodeEquals = (this.bench == null && other.getTeam() == null) || (this.bench != null && Arrays.equals(this.bench, other.getBench()));
         boolean coachCodeEquals = (this.coach == null && other.getCoach() == null) || (this.coach != null && this.coach.equals(other.getCoach()));
         boolean cardsCodeEquals = (this.cards == null && other.getCards() == null) || (this.cards != null && this.cards.equals(other.getCards()));
@@ -165,5 +107,65 @@ public class TeamGame implements ITeamGame {
         if (Objects.nonNull(cards)) result = prime * result + cards.hashCode();
         if (Objects.nonNull(coach)) result = prime * result + coach.hashCode();
         return result;
+    }
+
+    @Override
+    public ITeam getTeam() {
+        return team;
+    }
+
+    @Override
+    public void setBench(IPerson[] bench) {
+        this.bench = bench;
+    }
+
+    @Override
+    public Host getHost() {
+        return host;
+    }
+
+    @Override
+    public IPerson[] getLineUp() {
+        return lineUp;
+    }
+
+    @Override
+    public int getSubstituteCounter() {
+        return substituteCounter;
+    }
+
+    @Override
+    public int getTeamScore() {
+        return teamScore;
+    }
+
+    @Override
+    public void setTeamScore(int teamScore) {
+        this.teamScore = teamScore;
+    }
+
+    @Override
+    public IPerson[] getBench() {
+        return bench;
+    }
+
+    @Override
+    public Map<IPerson, List<Card>> getCards() {
+        return cards;
+    }
+
+    @Override
+    public IPerson getCoach() {
+        return coach;
+    }
+
+    @Override
+    public void setLineUp(IPerson[] lineUp) {
+        this.lineUp = lineUp;
+    }
+
+    @Override
+    public void setSubstituteCounter(int substituteCounter) {
+        this.substituteCounter = substituteCounter;
     }
 }

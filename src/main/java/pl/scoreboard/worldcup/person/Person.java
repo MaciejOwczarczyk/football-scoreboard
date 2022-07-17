@@ -17,50 +17,62 @@ public class Person implements IPerson {
         this.lastName = lastName;
     }
 
+    @Override
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
+    @Override
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
+    @Override
     public void setAge(int age) {
         this.age = age;
     }
 
+    @Override
     public void setPostalCode(String postalCode) {
         this.postalCode = postalCode;
     }
 
+    @Override
     public void setAddress(String address) {
         this.address = address;
     }
 
+    @Override
     public void setCity(String city) {
         this.city = city;
     }
 
+    @Override
     public String getFirstName() {
         return firstName;
     }
 
+    @Override
     public String getLastName() {
         return lastName;
     }
 
+    @Override
     public int getAge() {
         return age;
     }
 
+    @Override
     public String getPostalCode() {
         return postalCode;
     }
 
+    @Override
     public String getAddress() {
         return address;
     }
 
+    @Override
     public String getCity() {
         return city;
     }
