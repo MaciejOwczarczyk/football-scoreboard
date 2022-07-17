@@ -1,30 +1,27 @@
 package pl.scoreboard.worldcup.scoreboard;
 
-import org.junit.Rule;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
 import org.mockito.junit.jupiter.MockitoExtension;
 import pl.scoreboard.worldcup.game.Game;
 import pl.scoreboard.worldcup.game.IGame;
 import pl.scoreboard.worldcup.team.ITeam;
 import pl.scoreboard.worldcup.teaminagame.ITeamGame;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.Set;
 
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class ScoreBoardTest {
+class ScoreBoardTest {
 
     @Mock
     IGame game;
@@ -45,15 +42,13 @@ public class ScoreBoardTest {
     @Mock
     ITeam away2;
 
-    @Rule
-    public MockitoRule rule = MockitoJUnit.rule();
 
     private final PrintStream standardOut = System.out;
     private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
 
     @DisplayName("Should check contract between hashcode() and equals()")
     @Test
-    public void shouldCheckEqualsAndHashCodeContract() {
+    void shouldCheckEqualsAndHashCodeContract() {
         IScoreBoard scoreBoard = ScoreBoard.getInstance();
         IScoreBoard scoreBoard1 = ScoreBoard.getInstance();
         int hash = scoreBoard.hashCode();
@@ -64,7 +59,7 @@ public class ScoreBoardTest {
     
     @DisplayName("Should start a game")
     @Test
-    public void shouldStartAGame() {
+    void shouldStartAGame() {
         ScoreBoard scoreBoard = mock(ScoreBoard.class, CALLS_REAL_METHODS);
         scoreBoard.startAGame(game);
         Set<IGame> expected = Set.of(game);
@@ -73,7 +68,7 @@ public class ScoreBoardTest {
     }
 
     @Test
-    public void updateScore() {
+    void updateScore() {
         IScoreBoard scoreBoard = mock(ScoreBoard.class, CALLS_REAL_METHODS);
         IGame game = new Game(homeTeam, awayTeam);
         scoreBoard.startAGame(game);
@@ -89,7 +84,7 @@ public class ScoreBoardTest {
     }
 
     @Test
-    public void finishAGame() {
+    void finishAGame() {
         IScoreBoard scoreBoard = mock(ScoreBoard.class, CALLS_REAL_METHODS);
         scoreBoard.startAGame(game);
         scoreBoard.finishAGame(game);
@@ -97,7 +92,7 @@ public class ScoreBoardTest {
     }
 
     @Test
-    public void getAllGamesScore() {
+    void getAllGamesScore() {
         IScoreBoard scoreBoard = mock(ScoreBoard.class, CALLS_REAL_METHODS);
         IGame game = new Game(homeTeam, awayTeam);
         IGame game1 = new Game(homeTeam2, awayTeam2);
@@ -122,7 +117,7 @@ public class ScoreBoardTest {
     }
 
     @Test
-    public void getScore() {
+    void getScore() {
         IScoreBoard scoreBoard = mock(ScoreBoard.class, CALLS_REAL_METHODS);
         IGame game1 = new Game(homeTeam2, awayTeam2);
         scoreBoard.startAGame(game1);
