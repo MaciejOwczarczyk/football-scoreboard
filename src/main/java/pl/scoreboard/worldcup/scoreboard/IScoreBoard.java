@@ -1,5 +1,6 @@
 package pl.scoreboard.worldcup.scoreboard;
 
+import pl.scoreboard.worldcup.game.GamePhase;
 import pl.scoreboard.worldcup.game.IGame;
 
 import java.util.Set;
@@ -17,5 +18,8 @@ public interface IScoreBoard  {
     void getScore(IGame game);
 
     Set<IGame> getiGames();
+
+    void updateGamePhase(IGame game, GamePhase gamePhase);
+
 
 }
