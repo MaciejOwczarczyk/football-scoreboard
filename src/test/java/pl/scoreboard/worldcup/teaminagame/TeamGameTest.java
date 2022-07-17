@@ -43,7 +43,7 @@ class TeamGameTest {
     @DisplayName("Should substitute player")
     @Test
     void shouldSubstitutePlayer() {
-        TeamGame teamGame = mock(TeamGame.class, CALLS_REAL_METHODS);
+        ITeamGame teamGame = mock(TeamGame.class, CALLS_REAL_METHODS);
         IPerson player1 = new Player("Player1", "Player1");
         IPerson player2 = new Player("Player2", "Player2");
         IPerson player3 = new Player("Player3", "Player3");
@@ -64,7 +64,7 @@ class TeamGameTest {
     @DisplayName("Should not substitute player")
     @Test
     void shouldNotSubstitutePlayer() {
-        TeamGame teamGame = mock(TeamGame.class, CALLS_REAL_METHODS);
+        ITeamGame teamGame = mock(TeamGame.class, CALLS_REAL_METHODS);
         IPerson player1 = new Player("Player1", "Player1");
         IPerson player2 = new Player("Player2", "Player2");
         IPerson player3 = new Player("Player3", "Player3");
@@ -85,7 +85,7 @@ class TeamGameTest {
     @DisplayName("Should give red card to a player")
     @Test
     void shouldGiveRedCardToAPlayer() {
-        TeamGame teamGame = mock(TeamGame.class, CALLS_REAL_METHODS);
+        ITeamGame teamGame = mock(TeamGame.class, CALLS_REAL_METHODS);
         IPerson player1 = new Player("Player1", "Player1");
         IPerson player2 = new Player("Player2", "Player2");
         IPerson player3 = new Player("Player3", "Player3");
@@ -103,7 +103,7 @@ class TeamGameTest {
     @DisplayName("Should give first yellow card to a player")
     @Test
     void shouldGiveFirstYellowCardToAPlayer() {
-        TeamGame teamGame = mock(TeamGame.class, CALLS_REAL_METHODS);
+        ITeamGame teamGame = mock(TeamGame.class, CALLS_REAL_METHODS);
         IPerson player1 = new Player("Player1", "Player1");
         IPerson player2 = new Player("Player2", "Player2");
         IPerson player3 = new Player("Player3", "Player3");
@@ -122,7 +122,7 @@ class TeamGameTest {
     @DisplayName("Should give second yellow card to a player")
     @Test
     void shouldGiveSecondYellowCardToAPlayer() {
-        TeamGame teamGame = mock(TeamGame.class, CALLS_REAL_METHODS);
+        ITeamGame teamGame = mock(TeamGame.class, CALLS_REAL_METHODS);
 
         IPerson player1 = new Player("Player1", "Player1");
         IPerson player2 = new Player("Player2", "Player2");

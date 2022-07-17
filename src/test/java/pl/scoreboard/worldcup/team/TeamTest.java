@@ -31,7 +31,7 @@ class TeamTest {
     @DisplayName("Should add a new player to the team")
     @Test
     void shouldAddPlayerToATeam() {
-        Team team = mock(Team.class, CALLS_REAL_METHODS);
+        ITeam team = mock(Team.class, CALLS_REAL_METHODS);
         IPerson player1 = new Player("Player1", "Player1");
         IPerson player2 = new Player("Player2", "Player2");
         IPerson player3 = new Player("Player3", "Player3");
@@ -46,7 +46,7 @@ class TeamTest {
     @DisplayName("Should remove a player from the team")
     @Test
     void shouldRemovePlayerFromATeam() {
-        Team team = mock(Team.class, CALLS_REAL_METHODS);
+        ITeam team = mock(Team.class, CALLS_REAL_METHODS);
         IPerson player1 = new Player("Player1", "Player1");
         IPerson player2 = new Player("Player2", "Player2");
         IPerson player3 = new Player("Player3", "Player3");
@@ -61,7 +61,7 @@ class TeamTest {
     @DisplayName("Should add a new staff to the team")
     @Test
     void shouldAddStaffToATeam() {
-        Team team = mock(Team.class, CALLS_REAL_METHODS);
+        ITeam team = mock(Team.class, CALLS_REAL_METHODS);
         IPerson staff = new Staff("Coach1", "Coach");
         IPerson staff2 = new Staff("Physio2", "Physio2");
         IPerson staff3 = new Staff("Physio3", "Physio3");
@@ -76,7 +76,7 @@ class TeamTest {
     @DisplayName("Should remove a staff from the team")
     @Test
     void shouldRemoveStaffFromATeam() {
-        Team team = mock(Team.class, CALLS_REAL_METHODS);
+        ITeam team = mock(Team.class, CALLS_REAL_METHODS);
         IPerson staff = new Staff("Coach1", "Coach");
         IPerson staff2 = new Staff("Physio2", "Physio2");
         IPerson staff3 = new Staff("Physio3", "Physio3");
