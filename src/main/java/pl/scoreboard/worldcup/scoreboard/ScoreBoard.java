@@ -28,7 +28,7 @@ public class ScoreBoard implements IScoreBoard {
         if (Objects.isNull(iGames)) iGames = new HashSet<>();
         if (!iGames.contains(game)) {
             game.setGameStart(Timestamp.valueOf(LocalDateTime.now()));
-            game.setGamePhase(GamePhase.FIRST_HALF);
+            updateGamePhase(game, GamePhase.FIRST_HALF);
             updateScore(game, 0, 0);
             this.iGames.add(game);
         }
@@ -45,7 +45,7 @@ public class ScoreBoard implements IScoreBoard {
     public void finishAGame(IGame game) {
         if (game.getGamePhase() != GamePhase.FINISHED) {
             game.setGameFinish(Timestamp.valueOf(LocalDateTime.now()));
-            game.setGamePhase(GamePhase.FINISHED);
+            updateGamePhase(game, GamePhase.FINISHED);
             this.iGames.remove(game);
         }
     }
@@ -68,6 +68,13 @@ public class ScoreBoard implements IScoreBoard {
     @Override
     public Set<IGame> getiGames() {
         return iGames;
+    }
+
+    @Override
+    public void updateGamePhase(IGame game, GamePhase gamePhase) {
+        if (iGames.contains(game)) {
+            game.setGamePhase(gamePhase);
+        }
     }
 
     @Override
