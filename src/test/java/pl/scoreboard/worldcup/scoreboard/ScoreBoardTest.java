@@ -6,6 +6,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import pl.scoreboard.worldcup.game.Game;
+import pl.scoreboard.worldcup.game.GamePhase;
 import pl.scoreboard.worldcup.game.IGame;
 import pl.scoreboard.worldcup.team.ITeam;
 import pl.scoreboard.worldcup.teaminagame.ITeamGame;
@@ -42,7 +43,6 @@ class ScoreBoardTest {
     @Mock
     ITeam away2;
 
-
     private final PrintStream standardOut = System.out;
     private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
 
@@ -60,15 +60,16 @@ class ScoreBoardTest {
     @DisplayName("Should start a game")
     @Test
     void shouldStartAGame() {
-        ScoreBoard scoreBoard = mock(ScoreBoard.class, CALLS_REAL_METHODS);
+        IScoreBoard scoreBoard = mock(ScoreBoard.class, CALLS_REAL_METHODS);
         scoreBoard.startAGame(game);
         Set<IGame> expected = Set.of(game);
         Set<IGame> actual = scoreBoard.getiGames();
         assertEquals(expected, actual);
     }
 
+    @DisplayName("Should update score")
     @Test
-    void updateScore() {
+    void shouldUpdateScore() {
         IScoreBoard scoreBoard = mock(ScoreBoard.class, CALLS_REAL_METHODS);
         IGame game = new Game(homeTeam, awayTeam);
         scoreBoard.startAGame(game);
@@ -83,16 +84,18 @@ class ScoreBoardTest {
         assertEquals(expectedAwayTeamScore, actualAwayTeamScore);
     }
 
+    @DisplayName("Should finish a game")
     @Test
-    void finishAGame() {
+    void shouldFinishAGame() {
         IScoreBoard scoreBoard = mock(ScoreBoard.class, CALLS_REAL_METHODS);
         scoreBoard.startAGame(game);
         scoreBoard.finishAGame(game);
         assertFalse(scoreBoard.getiGames().contains(game));
     }
 
+    @DisplayName("Should print all games score")
     @Test
-    void getAllGamesScore() {
+    void shouldPrintAllGamesScore() {
         IScoreBoard scoreBoard = mock(ScoreBoard.class, CALLS_REAL_METHODS);
         IGame game = new Game(homeTeam, awayTeam);
         IGame game1 = new Game(homeTeam2, awayTeam2);
@@ -116,8 +119,9 @@ class ScoreBoardTest {
         System.setOut(standardOut);
     }
 
+    @DisplayName("Should print single game score")
     @Test
-    void getScore() {
+    void shouldPrintSingleGameScore() {
         IScoreBoard scoreBoard = mock(ScoreBoard.class, CALLS_REAL_METHODS);
         IGame game1 = new Game(homeTeam2, awayTeam2);
         scoreBoard.startAGame(game1);
@@ -131,5 +135,17 @@ class ScoreBoardTest {
         scoreBoard.getScore(game1);
         assertEquals("France - England: 1 - 1", outputStreamCaptor.toString().trim());
         System.setOut(standardOut);
+    }
+
+    @DisplayName("Should update game phase")
+    @Test
+    void shouldUpdateGamePhase() {
+        IScoreBoard scoreBoard = mock(ScoreBoard.class, CALLS_REAL_METHODS);
+        IGame game = mock(Game.class, CALLS_REAL_METHODS);
+        scoreBoard.startAGame(game);
+        scoreBoard.updateGamePhase(game, GamePhase.SECOND_HALF);
+        GamePhase expected = GamePhase.SECOND_HALF;
+        GamePhase actual = game.getGamePhase();
+        assertEquals(expected, actual);
     }
 }
