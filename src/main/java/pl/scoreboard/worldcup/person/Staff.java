@@ -62,7 +62,7 @@ public class Staff extends Person {
         boolean contractStartCodeEquals = (this.contractStartDate == null && other.getContractStartDate() == null) || (this.contractStartDate != null && this.contractStartDate.equals(other.contractStartDate));
         boolean contractEndCodeEquals = (this.contractEndDate == null && other.getContractEndDate()== null) || (this.contractEndDate != null && this.contractEndDate.equals(other.getContractEndDate()));
         boolean roleCodeEquals = (this.staffRole == null && other.getStaffRole() == null) || (this.staffRole != null && this.staffRole.equals(other.getStaffRole()));
-        return salaryCodeEquals && contractStartCodeEquals && contractEndCodeEquals && roleCodeEquals && super.equals(o);
+        return salaryCodeEquals && contractStartCodeEquals && contractEndCodeEquals && roleCodeEquals;
     }
 
     @Override
